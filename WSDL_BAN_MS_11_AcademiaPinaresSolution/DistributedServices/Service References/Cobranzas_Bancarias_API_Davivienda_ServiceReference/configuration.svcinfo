@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<configurationSnapshot xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:schemas-microsoft-com:xml-wcfconfigurationsnapshot">
+  <behaviors />
+  <bindings>
+    <binding digest="System.ServiceModel.Configuration.BasicHttpBindingElement, System.ServiceModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&lt;Data name=&quot;Cobranzas_Bancarias_API_DaviviendaSoap&quot; /&gt;" bindingType="basicHttpBinding" name="Cobranzas_Bancarias_API_DaviviendaSoap" />
+  </bindings>
+  <endpoints>
+    <endpoint normalizedDigest="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&lt;Data address=&quot;http://10.37.241.116:5003/Cobranzas_Bancarias_API_Davivienda.asmx&quot; binding=&quot;basicHttpBinding&quot; bindingConfiguration=&quot;Cobranzas_Bancarias_API_DaviviendaSoap&quot; contract=&quot;Cobranzas_Bancarias_API_Davivienda_ServiceReference.Cobranzas_Bancarias_API_DaviviendaSoap&quot; name=&quot;Cobranzas_Bancarias_API_DaviviendaSoap&quot; /&gt;" digest="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&lt;Data address=&quot;http://10.37.241.116:5003/Cobranzas_Bancarias_API_Davivienda.asmx&quot; binding=&quot;basicHttpBinding&quot; bindingConfiguration=&quot;Cobranzas_Bancarias_API_DaviviendaSoap&quot; contract=&quot;Cobranzas_Bancarias_API_Davivienda_ServiceReference.Cobranzas_Bancarias_API_DaviviendaSoap&quot; name=&quot;Cobranzas_Bancarias_API_DaviviendaSoap&quot; /&gt;" contractName="Cobranzas_Bancarias_API_Davivienda_ServiceReference.Cobranzas_Bancarias_API_DaviviendaSoap" name="Cobranzas_Bancarias_API_DaviviendaSoap" />
+  </endpoints>
+</configurationSnapshot>

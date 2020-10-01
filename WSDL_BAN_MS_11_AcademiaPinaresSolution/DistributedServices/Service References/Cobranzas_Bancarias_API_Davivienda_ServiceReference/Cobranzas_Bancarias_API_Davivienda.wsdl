@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://Cobranzas_Bancarias_API_Davivienda/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://Cobranzas_Bancarias_API_Davivienda/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://Cobranzas_Bancarias_API_Davivienda/">
+      <s:element name="ConsultaSaldo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sBank" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sPass" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sCodigo" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConsultaSaldoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ConsultaSaldoResult" type="tns:Saldos" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Saldos">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Error" type="tns:Error" />
+          <s:element minOccurs="1" maxOccurs="1" name="Familia" type="tns:Familia" />
+          <s:element minOccurs="0" maxOccurs="1" name="Saldos" type="tns:ArrayOfSaldo" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Error">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Codigo" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Mensaje" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Familia">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Nucleo" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfSaldo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Saldo" type="tns:Saldo" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Saldo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Tipo" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Concepto" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NumFactura" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Cuota" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Valor" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Moneda" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Vence" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Periodo" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="PagoCuota">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sBank" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sPass" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="__oPago" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PagoCuotaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PagoCuotaResult" type="tns:Saldos" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReversarPago">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sBank" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sPass" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="__oPago" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReversarPagoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ReversarPagoResult" type="tns:Saldos" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="ConsultaSaldoSoapIn">
+    <wsdl:part name="parameters" element="tns:ConsultaSaldo" />
+  </wsdl:message>
+  <wsdl:message name="ConsultaSaldoSoapOut">
+    <wsdl:part name="parameters" element="tns:ConsultaSaldoResponse" />
+  </wsdl:message>
+  <wsdl:message name="PagoCuotaSoapIn">
+    <wsdl:part name="parameters" element="tns:PagoCuota" />
+  </wsdl:message>
+  <wsdl:message name="PagoCuotaSoapOut">
+    <wsdl:part name="parameters" element="tns:PagoCuotaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReversarPagoSoapIn">
+    <wsdl:part name="parameters" element="tns:ReversarPago" />
+  </wsdl:message>
+  <wsdl:message name="ReversarPagoSoapOut">
+    <wsdl:part name="parameters" element="tns:ReversarPagoResponse" />
+  </wsdl:message>
+  <wsdl:portType name="Cobranzas_Bancarias_API_DaviviendaSoap">
+    <wsdl:operation name="ConsultaSaldo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Metodo de consulta de facturas con pagos pendientes</wsdl:documentation>
+      <wsdl:input message="tns:ConsultaSaldoSoapIn" />
+      <wsdl:output message="tns:ConsultaSaldoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PagoCuota">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Metodo para aplicar pago a facturas pendientes</wsdl:documentation>
+      <wsdl:input message="tns:PagoCuotaSoapIn" />
+      <wsdl:output message="tns:PagoCuotaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReversarPago">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Metodo para revertir facturas pagadas</wsdl:documentation>
+      <wsdl:input message="tns:ReversarPagoSoapIn" />
+      <wsdl:output message="tns:ReversarPagoSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="Cobranzas_Bancarias_API_DaviviendaSoap" type="tns:Cobranzas_Bancarias_API_DaviviendaSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ConsultaSaldo">
+      <soap:operation soapAction="http://Cobranzas_Bancarias_API_Davivienda/ConsultaSaldo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PagoCuota">
+      <soap:operation soapAction="http://Cobranzas_Bancarias_API_Davivienda/PagoCuota" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReversarPago">
+      <soap:operation soapAction="http://Cobranzas_Bancarias_API_Davivienda/ReversarPago" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="Cobranzas_Bancarias_API_DaviviendaSoap12" type="tns:Cobranzas_Bancarias_API_DaviviendaSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ConsultaSaldo">
+      <soap12:operation soapAction="http://Cobranzas_Bancarias_API_Davivienda/ConsultaSaldo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PagoCuota">
+      <soap12:operation soapAction="http://Cobranzas_Bancarias_API_Davivienda/PagoCuota" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReversarPago">
+      <soap12:operation soapAction="http://Cobranzas_Bancarias_API_Davivienda/ReversarPago" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Cobranzas_Bancarias_API_Davivienda">
+    <wsdl:port name="Cobranzas_Bancarias_API_DaviviendaSoap" binding="tns:Cobranzas_Bancarias_API_DaviviendaSoap">
+      <soap:address location="http://10.37.241.116:5003/Cobranzas_Bancarias_API_Davivienda.asmx" />
+    </wsdl:port>
+    <wsdl:port name="Cobranzas_Bancarias_API_DaviviendaSoap12" binding="tns:Cobranzas_Bancarias_API_DaviviendaSoap12">
+      <soap12:address location="http://10.37.241.116:5003/Cobranzas_Bancarias_API_Davivienda.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

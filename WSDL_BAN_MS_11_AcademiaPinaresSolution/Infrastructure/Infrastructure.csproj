@@ -44,6 +44,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\ConsultarSaldo\ConsultarSaldoRepository.cs" />
+    <Compile Include="Repositories\PagarCuota\PagarCuotaRepository.cs" />
+    <Compile Include="Repositories\ReversarPago\ReversarPagoRepository.cs" />
     <Compile Include="Repositories\TestConnection\TestConnectionRepository.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

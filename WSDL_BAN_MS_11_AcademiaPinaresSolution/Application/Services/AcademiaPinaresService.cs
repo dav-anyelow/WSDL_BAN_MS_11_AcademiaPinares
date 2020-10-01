@@ -2,6 +2,9 @@
 using EasyTemplateSolution.DistributedServices.WsdlSunitpClient.Concrete;
 using EasyTemplateSolution.DistributedServices.WsdlSunitpClient.Services;
 using EasyTemplateSolution.Domain.Dto;
+using Infrastructure.Repositories.ConsultarSaldo;
+using Infrastructure.Repositories.PagarCuota;
+using Infrastructure.Repositories.ReversarPago;
 using Infrastructure.Repositories.TestConnection;
 using System;
 using System.Collections.Generic;
@@ -17,7 +20,7 @@ namespace Application.Services
         public AcademiaPinaresService()
         {
             _iSunitpService = new SunitpService();
-            _iSunitpService.SetInt("LAYER_3", "BANCO_MS_8", "PROCESOS DIGITALES VIVI", "MICROSERVICIO DE PROCESOS DIGITALES VIVI");
+            _iSunitpService.SetInt("LAYER_3", "BANCO_MS_11", "ACADEMIA PINARES", "MICROSERVICIO DE ACADEMIA PINARES");
             _iSunitpService.AddSingleLog("INICIO DEL PROCESAMIENTO");
         }
 
@@ -30,11 +33,14 @@ namespace Application.Services
             dataTransferObjectResponse.ExternalError = "PROCESO REALIZADO CORRECTAMENTE";
 
             var edpf = new EasyDataProcessFactory();
-            edpf.RegisterRepository(_iSunitpService, "BAN_MS_8_M_0_TEST_CONNECTION", new TestConnectionRepository());
+            edpf.RegisterRepository(_iSunitpService, "BAN_MS_11_M_0_TEST_CONNECTION", new TestConnectionRepository());
+            edpf.RegisterRepository(_iSunitpService, "BAN_MS_11_M_1_ACADEMIA_PINARES_CONSULTAR_SALDO", new ConsultarSaldoRepository());
+            edpf.RegisterRepository(_iSunitpService, "BAN_MS_11_M_2_ACADEMIA_PINARES_PAGAR_CUOTA", new PagarCuotaRepository());
+            edpf.RegisterRepository(_iSunitpService, "BAN_MS_11_M_1_ACADEMIA_PINARES_REVERSAR_PAGO", new ReversarPagoRepository());
 
             dataTransferObjectResponse = edpf.DoProcess(_iSunitpService, dataTransferObject);
 
-            _iSunitpService.AddObjLog("ProcesosDigitalesViviService DoProcess", dataTransferObjectResponse.Data.Error, dataTransferObjectResponse.Data.ExternalError, dataTransferObjectResponse);
+            _iSunitpService.AddObjLog("AcademiaPinaresService DoProcess", dataTransferObjectResponse.Data.Error, dataTransferObjectResponse.Data.ExternalError, dataTransferObjectResponse);
             _iSunitpService.AddSingleLog("FIN DEL PROCESAMIENTO");
             _iSunitpService.SaveLog();
 
