@@ -30,6 +30,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EasyTemplateSolution">
+      <HintPath>..\..\..\SUNITP_DLL\EasyTemplateSolution.dll</HintPath>
+    </Reference>
+    <Reference Include="SUNITP.LIB">
+      <HintPath>..\..\..\SUNITP_DLL\SUNITP.LIB.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,11 +46,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\AcademiaPinares\Adapters\ConsultarSaldoAdapter.cs" />
+    <Compile Include="Core\AcademiaPinares\IAcademiaPinaresAdapter.cs" />
+    <Compile Include="Core\Helpers\DataMapperHelper.cs" />
+    <Compile Include="Entities\PWS20PINCL.cs" />
+    <Compile Include="Entities\PWS21PINCL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Core\AcademiaPinares\Adapters\" />
-    <Folder Include="Core\AcademiaPinares\Services\" />
+    <ProjectReference Include="..\DistributedServices\DistributedServices.csproj">
+      <Project>{3BD8DAE3-3F7D-4FAC-A8F1-D9782525D010}</Project>
+      <Name>DistributedServices</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

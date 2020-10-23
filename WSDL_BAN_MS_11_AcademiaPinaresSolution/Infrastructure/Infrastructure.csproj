@@ -33,6 +33,9 @@
     <Reference Include="EasyTemplateSolution">
       <HintPath>..\..\..\SUNITP_DLL\EasyTemplateSolution.dll</HintPath>
     </Reference>
+    <Reference Include="SUNITP.LIB">
+      <HintPath>..\..\..\SUNITP_DLL\SUNITP.LIB.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -48,6 +51,12 @@
     <Compile Include="Repositories\PagarCuota\PagarCuotaRepository.cs" />
     <Compile Include="Repositories\ReversarPago\ReversarPagoRepository.cs" />
     <Compile Include="Repositories\TestConnection\TestConnectionRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj">
+      <Project>{d51228c9-d48a-4834-96fa-93c9d1d2ad5c}</Project>
+      <Name>Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

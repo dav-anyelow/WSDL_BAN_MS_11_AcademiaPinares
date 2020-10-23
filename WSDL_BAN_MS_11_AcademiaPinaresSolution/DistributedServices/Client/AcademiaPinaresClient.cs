@@ -32,7 +32,9 @@ namespace DistributedServices.Client
                 saldos.Error.Codigo = "999";
                 saldos.Error.Mensaje = "Error al momento de consultar el servicio.";
 
-                _iSunitpService.AddLog("AcademiaPinaresClient ConsultaSaldo", "10000000000000000034", "ERROR AL MOMENTO DE EJECUTAR EL POSTEO A UN SERVICIO EXTERNO.", ex.ToString());
+                response.Body.ConsultaSaldoResult = saldos;
+
+               _iSunitpService.AddLog("AcademiaPinaresClient ConsultaSaldo", "10000000000000000034", "ERROR AL MOMENTO DE EJECUTAR EL POSTEO A UN SERVICIO EXTERNO.", ex.ToString());
             }
 
             return response;
@@ -58,6 +60,8 @@ namespace DistributedServices.Client
                 saldos.Error = new Error();
                 saldos.Error.Codigo = "999";
                 saldos.Error.Mensaje = "Error al momento de consultar el servicio.";
+
+                response.Body.PagoCuotaResult = saldos;
 
                 _iSunitpService.AddLog("AcademiaPinaresClient PagoCuota", "10000000000000000034", "ERROR AL MOMENTO DE EJECUTAR EL POSTEO A UN SERVICIO EXTERNO.", ex.ToString());
             }
@@ -86,6 +90,8 @@ namespace DistributedServices.Client
                 saldos.Error = new Error();
                 saldos.Error.Codigo = "999";
                 saldos.Error.Mensaje = "Error al momento de consultar el servicio.";
+
+                response.Body.ReversarPagoResult = saldos;
 
                 _iSunitpService.AddLog("AcademiaPinaresClient ReversarPago", "10000000000000000034", "ERROR AL MOMENTO DE EJECUTAR EL POSTEO A UN SERVICIO EXTERNO.", ex.ToString());
             }
