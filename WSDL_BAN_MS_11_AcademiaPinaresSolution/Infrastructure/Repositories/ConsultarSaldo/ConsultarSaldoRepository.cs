@@ -53,7 +53,7 @@ namespace Infrastructure.Repositories.ConsultarSaldo
         {
             var pws20PinCl = new PWS20PINCL();
 
-            _iSunitpService.AddObjLog("VerificacionUsuarioRepository SaveDataHeaderResponse", "00000000000000000000", "OBJETO ENVIADO", pws20PinCl.GetObject());
+            _iSunitpService.AddObjLog("ConsultarSaldoRepository SaveDataHeaderResponse", "00000000000000000000", "OBJETO ENVIADO", pws20PinCl.GetObject());
             //CallModel
             var edm = new EasyDataModels();
             edm.EasyCallInit(_oledbConnection, pws20PinCl);
@@ -72,7 +72,7 @@ namespace Infrastructure.Repositories.ConsultarSaldo
         {
             var pws21PinCl = new PWS21PINCL();
 
-            _iSunitpService.AddObjLog("VerificacionUsuarioRepository SaveDataDetailResponse", "00000000000000000000", "OBJETO ENVIADO", pws21PinCl.GetObject());
+            _iSunitpService.AddObjLog("ConsultarSaldoRepository SaveDataDetailResponse", "00000000000000000000", "OBJETO ENVIADO", pws21PinCl.GetObject());
             //CallModel
             var edm = new EasyDataModels();
             edm.EasyCallInit(_oledbConnection, pws21PinCl);

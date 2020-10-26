@@ -1,6 +1,10 @@
-﻿using EasyTemplateSolution.DistributedServices.WsdlSunitpClient.Services;
+﻿using Domain.Core.AcademiaPinares;
+using Domain.Core.AcademiaPinares.Adapters;
+using Domain.Entities;
+using EasyTemplateSolution.DistributedServices.WsdlSunitpClient.Services;
 using EasyTemplateSolution.Domain.ARepositories;
 using EasyTemplateSolution.Domain.Dto;
+using EasyTemplateSolution.Infrastructure.DataModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,23 +40,31 @@ namespace Infrastructure.Repositories.ReversarPago
                 return dataResponse;
             }
 
-            var idServicio = new Data()
-            {
-                HasData = true,
-                Field = "idServicio",
-                Value = "0"
-            };
-            dataResponse.DataList.Add(idServicio);
-
-            var status = new Data()
-            {
-                HasData = true,
-                Field = "status",
-                Value = "0"
-            };
-            dataResponse.DataList.Add(status);
+            //Academia Pinares
+            IAcademiaPinaresAdapter iAcademiaPinaresAdapter = new ReversarCuotaAdapter();
+            var response = iAcademiaPinaresAdapter.DoProcess(_iSunitpService, data);
+            dataResponse.DataList.Add(response);
 
             return dataResponse;
+        }
+
+        private void SaveDataHeaderResponse(ISunitpService _iSunitpService, Data response)
+        {
+            var pws20PinCl = new PWS20PINCL();
+
+            _iSunitpService.AddObjLog("PagarCuotaRepository SaveDataHeaderResponse", "00000000000000000000", "OBJETO ENVIADO", pws20PinCl.GetObject());
+            //CallModel
+            var edm = new EasyDataModels();
+            edm.EasyCallInit(_oledbConnection, pws20PinCl);
+            var pws20PinClResponse = edm.CallProcedure();
+            _iSunitpService.AddObjLog("PagarCuotaRepository SaveDataHeaderResponse", "00000000000000000000", "OBJETO RECIBIDO", pws20PinClResponse.GetObject());
+
+            //ValidateResponse
+            if (!edm.IsSuccessful())
+            {
+                _iSunitpService.AddSingleLog(pws20PinClResponse.GetValue("_defaultError"));
+            }
+
         }
     }
 }

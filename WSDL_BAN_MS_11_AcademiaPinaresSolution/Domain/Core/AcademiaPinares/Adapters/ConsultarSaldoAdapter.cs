@@ -148,25 +148,32 @@ namespace Domain.Core.AcademiaPinares.Adapters
 
         private Data MapResponse(ISunitpService _iSunitpService, ConsultaSaldoResponse responsePin)
         {
-
+            if(responsePin.Body.ConsultaSaldoResult.Error.Codigo == null)
+            {
+                responsePin.Body.ConsultaSaldoResult.Error.Codigo = "00";
+                responsePin.Body.ConsultaSaldoResult.Error.Mensaje = "CODIGO_PROCESO_EXITOSO";
+            }
             _iSunitpService.SetCoreErrors(responsePin.Body.ConsultaSaldoResult.Error.Codigo, responsePin.Body.ConsultaSaldoResult.Error.Mensaje);
 
             var response = new Data();
             response.Field = "ACADEMIA PINARES RESPONSE";
             response.HasData = true;
             response.DataList = new List<Data>();
-
+            
             var Error = new Data();
             Error.Field = "Error";
+            Error.HasData = true;
             Error.DataList = new List<Data>();
 
             var Codigo = new Data();
             Codigo.Field = "Codigo";
+            Codigo.HasData = true;
             Codigo.Value = responsePin.Body.ConsultaSaldoResult.Error.Codigo;
             Error.DataList.Add(Codigo);
 
             var Mensaje = new Data();
             Mensaje.Field = "Mensaje";
+            Mensaje.HasData = true;
             Mensaje.Value = responsePin.Body.ConsultaSaldoResult.Error.Mensaje;
             Error.DataList.Add(Mensaje);
 
@@ -177,10 +184,13 @@ namespace Domain.Core.AcademiaPinares.Adapters
                
                 var Familia = new Data();
                 Familia.Field = "Familia";
+                Familia.HasData = true;
+
                 Familia.DataList = new List<Data>();
 
                 var Nucleo = new Data();
                 Nucleo.Field = "Nucleo";
+                Nucleo.HasData = true;
                 Nucleo.Value = responsePin.Body.ConsultaSaldoResult.Familia.Nucleo;
                 Familia.DataList.Add(Nucleo);
 
@@ -188,51 +198,61 @@ namespace Domain.Core.AcademiaPinares.Adapters
 
                 var Saldos = new Data();
                 Saldos.Field = "Saldos";
+                Saldos.HasData = true;
                 Saldos.DataList = new List<Data>();
 
                 foreach (var saldoMember in responsePin.Body.ConsultaSaldoResult.SaldosMember)
                 {
                     var Saldo = new Data();
                     Saldo.Field = "Saldo";
+                    Saldo.HasData = true;
                     Saldo.DataList = new List<Data>();
 
                     var Tipo = new Data();
                     Tipo.Field = "Tipo";
+                    Tipo.HasData = true;
                     Tipo.Value = saldoMember.Tipo;
                     Saldo.DataList.Add(Tipo);
 
                     var Concepto = new Data();
                     Concepto.Field = "Concepto";
+                    Concepto.HasData = true;
                     Concepto.Value = saldoMember.Concepto;
                     Saldo.DataList.Add(Concepto);
 
                     var NumFactura = new Data();
                     NumFactura.Field = "NumFactura";
+                    NumFactura.HasData = true;
                     NumFactura.Value = saldoMember.NumFactura;
                     Saldo.DataList.Add(NumFactura);
 
                     var Cuota = new Data();
                     Cuota.Field = "Cuota";
+                    Cuota.HasData = true;
                     Cuota.Value = saldoMember.Cuota;
                     Saldo.DataList.Add(Cuota);
 
                     var Valor = new Data();
                     Valor.Field = "Valor";
+                    Valor.HasData = true;
                     Valor.Value = saldoMember.Valor;
                     Saldo.DataList.Add(Valor);
 
                     var Moneda = new Data();
                     Moneda.Field = "Moneda";
+                    Moneda.HasData = true;
                     Moneda.Value = saldoMember.Moneda;
                     Saldo.DataList.Add(Moneda);
 
                     var Vence = new Data();
                     Vence.Field = "Vence";
+                    Vence.HasData = true;
                     Vence.Value = saldoMember.Vence;
                     Saldo.DataList.Add(Vence);
 
                     var Periodo = new Data();
                     Periodo.Field = "Periodo";
+                    Periodo.HasData = true;
                     Periodo.Value = saldoMember.Periodo;
                     Saldo.DataList.Add(Periodo);
 
@@ -241,10 +261,9 @@ namespace Domain.Core.AcademiaPinares.Adapters
 
                 response.DataList.Add(Saldos);
             }
-
+            
             return response;
         }
-
 
 
     }

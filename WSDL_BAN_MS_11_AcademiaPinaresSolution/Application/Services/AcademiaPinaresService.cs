@@ -36,7 +36,7 @@ namespace Application.Services
             edpf.RegisterRepository(_iSunitpService, "BAN_MS_11_M_0_TEST_CONNECTION", new TestConnectionRepository());
             edpf.RegisterRepository(_iSunitpService, "BAN_MS_11_M_1_ACADEMIA_PINARES_CONSULTAR_SALDO", new ConsultarSaldoRepository());
             edpf.RegisterRepository(_iSunitpService, "BAN_MS_11_M_2_ACADEMIA_PINARES_PAGAR_CUOTA", new PagarCuotaRepository());
-            edpf.RegisterRepository(_iSunitpService, "BAN_MS_11_M_1_ACADEMIA_PINARES_REVERSAR_PAGO", new ReversarPagoRepository());
+            edpf.RegisterRepository(_iSunitpService, "BAN_MS_11_M_3_ACADEMIA_PINARES_REVERSAR_PAGO", new ReversarPagoRepository());
 
             dataTransferObjectResponse = edpf.DoProcess(_iSunitpService, dataTransferObject);
 

@@ -47,8 +47,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\AcademiaPinares\Adapters\ConsultarSaldoAdapter.cs" />
+    <Compile Include="Core\AcademiaPinares\Adapters\PagarCuotaAdapter.cs" />
+    <Compile Include="Core\AcademiaPinares\Adapters\ReversarCuotaAdapter.cs" />
     <Compile Include="Core\AcademiaPinares\IAcademiaPinaresAdapter.cs" />
     <Compile Include="Core\Helpers\DataMapperHelper.cs" />
+    <Compile Include="Core\Helpers\OPagoHelper.cs" />
     <Compile Include="Entities\PWS20PINCL.cs" />
     <Compile Include="Entities\PWS21PINCL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
