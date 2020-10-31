@@ -20,7 +20,7 @@ namespace Domain.Core.AcademiaPinares.Adapters
         private string _Sbank = "";
         private string _Spass = "";
         private string _Scodigo = "";
-
+        private string _guid = "";
         public ConsultarSaldoAdapter()
         {
             _iAcademiaPinaresClient = new AcademiaPinaresClient();
@@ -78,6 +78,7 @@ namespace Domain.Core.AcademiaPinares.Adapters
                 if (item.Field.Equals("Guid"))
                 {
                     isRequired = true;
+                    _guid = item.Value;
                 }
                 if (item.Field.Equals("Fecha"))
                 {
@@ -159,7 +160,13 @@ namespace Domain.Core.AcademiaPinares.Adapters
             response.Field = "ACADEMIA PINARES RESPONSE";
             response.HasData = true;
             response.DataList = new List<Data>();
-            
+
+            var Guid = new Data();
+            Guid.Field = "Guid";
+            Guid.HasData = true;
+            Guid.Value = _guid;
+            response.DataList.Add(Guid);
+
             var Error = new Data();
             Error.Field = "Error";
             Error.HasData = true;

@@ -19,7 +19,7 @@ namespace Infrastructure.Repositories.PagarCuota
         {
             get
             {
-                return false;
+                return true;
             }
         }
 
@@ -45,21 +45,54 @@ namespace Infrastructure.Repositories.PagarCuota
             var response = iAcademiaPinaresAdapter.DoProcess(_iSunitpService, data);
             dataResponse.DataList.Add(response);
 
-            
+            //Update Data Info to Core
+            SaveDataHeaderResponse(_iSunitpService, response);
 
             return dataResponse;
         }
 
         private void SaveDataHeaderResponse(ISunitpService _iSunitpService, Data response)
         {
-            var pws20PinCl = new PWS20PINCL();
+            var guid = "";
+            var codigo = "";
+            var mensaje = "";
+            var nucleo = "";
+            var pinaresDetail = new Data();
+            foreach (var detail in response.DataList)
+            {
+                if (detail.Field.Equals("Guid"))
+                {
+                    guid = detail.Value;
+                }
+                if (detail.Field.Equals("Error"))
+                {
+                    foreach (var item in detail.DataList)
+                    {
+                        if (item.Field.Equals("Codigo"))
+                        {
+                            codigo = item.Value;
+                        }
+                        if (item.Field.Equals("Mensaje"))
+                        {
+                            mensaje = item.Value;
+                        }
+                    }
+                }
 
-            _iSunitpService.AddObjLog("PagarCuotaRepository SaveDataHeaderResponse", "00000000000000000000", "OBJETO ENVIADO", pws20PinCl.GetObject());
+            }
+
+            var pws20PinCl = new PWS20PINCL();
+            pws20PinCl.SetValue("Guid", guid);
+            pws20PinCl.SetValue("Nucleo", nucleo);
+            pws20PinCl.SetValue("Codigo", codigo);
+            pws20PinCl.SetValue("Mensaje", mensaje);
+
+            _iSunitpService.AddObjLog("ConsultarSaldoRepository SaveDataHeaderResponse", "00000000000000000000", "OBJETO ENVIADO", pws20PinCl.GetObject());
             //CallModel
             var edm = new EasyDataModels();
             edm.EasyCallInit(_oledbConnection, pws20PinCl);
             var pws20PinClResponse = edm.CallProcedure();
-            _iSunitpService.AddObjLog("PagarCuotaRepository SaveDataHeaderResponse", "00000000000000000000", "OBJETO RECIBIDO", pws20PinClResponse.GetObject());
+            _iSunitpService.AddObjLog("ConsultarSaldoRepository SaveDataHeaderResponse", "00000000000000000000", "OBJETO RECIBIDO", pws20PinClResponse.GetObject());
 
             //ValidateResponse
             if (!edm.IsSuccessful())

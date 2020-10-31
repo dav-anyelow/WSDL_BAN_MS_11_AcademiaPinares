@@ -17,6 +17,7 @@ namespace Domain.Core.AcademiaPinares.Adapters
         IAcademiaPinaresClient _iAcademiaPinaresClient;
         private bool _requirided = false;
         private string _requiredField = "";
+        private string _guid = "";
         private PagoCuotaRequest _request;
 
         public PagarCuotaAdapter()
@@ -75,6 +76,7 @@ namespace Domain.Core.AcademiaPinares.Adapters
                 if (item.Field.Equals("Guid"))
                 {
                     isRequired = true;
+                    _guid = item.Value;
                 }
                 if (item.Field.Equals("Fecha"))
                 {
@@ -200,6 +202,12 @@ namespace Domain.Core.AcademiaPinares.Adapters
             response.Field = "ACADEMIA PINARES RESPONSE";
             response.HasData = true;
             response.DataList = new List<Data>();
+
+            var Guid = new Data();
+            Guid.Field = "Guid";
+            Guid.HasData = true;
+            Guid.Value = _guid;
+            response.DataList.Add(Guid);
 
             var Error = new Data();
             Error.Field = "Error";

@@ -20,7 +20,7 @@ namespace Infrastructure.Repositories.ConsultarSaldo
         {
             get
             {
-                return false;
+                return true;
             }
         }
 
@@ -45,13 +45,61 @@ namespace Infrastructure.Repositories.ConsultarSaldo
             IAcademiaPinaresAdapter iAcademiaPinaresAdapter = new ConsultarSaldoAdapter();
             var response = iAcademiaPinaresAdapter.DoProcess(_iSunitpService, data);
             dataResponse.DataList.Add(response);
-            
+
+            //Update Data Info to Core
+            SaveDataHeaderResponse(_iSunitpService, response);
+
             return dataResponse;
         }
 
         private void SaveDataHeaderResponse(ISunitpService _iSunitpService, Data response)
         {
+            var guid = "";
+            var codigo = "";
+            var mensaje = "";
+            var nucleo = "";
+            var pinaresDetail = new Data();
+            foreach(var detail in response.DataList)
+            {
+                if (detail.Field.Equals("Guid"))
+                {
+                    guid = detail.Value;
+                }
+                if (detail.Field.Equals("Error"))
+                {
+                    foreach(var item in detail.DataList)
+                    {
+                        if (item.Field.Equals("Codigo"))
+                        {
+                            codigo = item.Value;
+                        }
+                        if (item.Field.Equals("Mensaje"))
+                        {
+                            mensaje = item.Value;
+                        }
+                    }
+                }
+                if (detail.Field.Equals("Familia"))
+                {
+                    foreach (var item in detail.DataList)
+                    {
+                        if (item.Field.Equals("Nucleo"))
+                        {
+                            nucleo = item.Value;
+                        }
+                    }
+                }
+                if (detail.Field.Equals("Saldos"))
+                {
+                    pinaresDetail = detail;
+                }
+            }
+
             var pws20PinCl = new PWS20PINCL();
+            pws20PinCl.SetValue("Guid", guid);
+            pws20PinCl.SetValue("Nucleo", nucleo);
+            pws20PinCl.SetValue("Codigo", codigo);
+            pws20PinCl.SetValue("Mensaje", mensaje); 
 
             _iSunitpService.AddObjLog("ConsultarSaldoRepository SaveDataHeaderResponse", "00000000000000000000", "OBJETO ENVIADO", pws20PinCl.GetObject());
             //CallModel
@@ -61,30 +109,81 @@ namespace Infrastructure.Repositories.ConsultarSaldo
             _iSunitpService.AddObjLog("ConsultarSaldoRepository SaveDataHeaderResponse", "00000000000000000000", "OBJETO RECIBIDO", pws20PinClResponse.GetObject());
 
             //ValidateResponse
-            if (!edm.IsSuccessful())
+            if (edm.IsSuccessful())
+            {
+                if (codigo.Equals("00"))
+                {
+                    SaveDataDetailResponse(_iSunitpService, pinaresDetail, guid);
+                }
+            }
+            else
             {
                 _iSunitpService.AddSingleLog(pws20PinClResponse.GetValue("_defaultError"));
             }
             
         }
 
-        private void SaveDataDetailResponse(ISunitpService _iSunitpService, Data response)
+        private void SaveDataDetailResponse(ISunitpService _iSunitpService, Data pinaresDetail, string Guid)
         {
-            var pws21PinCl = new PWS21PINCL();
-
-            _iSunitpService.AddObjLog("ConsultarSaldoRepository SaveDataDetailResponse", "00000000000000000000", "OBJETO ENVIADO", pws21PinCl.GetObject());
-            //CallModel
-            var edm = new EasyDataModels();
-            edm.EasyCallInit(_oledbConnection, pws21PinCl);
-            var pws21PinClResponse = edm.CallProcedure();
-            _iSunitpService.AddObjLog("ConsultarSaldoRepository SaveDataDetailResponse", "00000000000000000000", "OBJETO RECIBIDO", pws21PinClResponse.GetObject());
-
-            //ValidateResponse
-            if (!edm.IsSuccessful())
+            
+            foreach (var detail in pinaresDetail.DataList)
             {
-                _iSunitpService.AddSingleLog(pws21PinClResponse.GetValue("_defaultError"));
-            }
+                var pws21PinCl = new PWS21PINCL();
+                pws21PinCl.SetValue("Guid", Guid);
 
+                if (detail.Field.Equals("Saldo"))
+                {
+                    foreach(var item in detail.DataList)
+                    {
+                        if (item.Field.Equals("Tipo"))
+                        {
+                            pws21PinCl.SetValue("Tipo", item.Value);
+                        }
+                        if (item.Field.Equals("Concepto"))
+                        {
+                            pws21PinCl.SetValue("Concepto", item.Value);
+                        }
+                        if (item.Field.Equals("NumFactura"))
+                        {
+                            pws21PinCl.SetValue("NumFactura", item.Value);
+                        }
+                        if (item.Field.Equals("Cuota"))
+                        {
+                            pws21PinCl.SetValue("Cuota", item.Value);
+                        }
+                        if (item.Field.Equals("Valor"))
+                        {
+                            pws21PinCl.SetValue("Valor", item.Value);
+                        }
+                        if (item.Field.Equals("Moneda"))
+                        {
+                            pws21PinCl.SetValue("Moneda", item.Value);
+                        }
+                        if (item.Field.Equals("Vence"))
+                        {
+                            pws21PinCl.SetValue("Vence", item.Value);
+                        }
+                        if (item.Field.Equals("Periodo"))
+                        {
+                            pws21PinCl.SetValue("Periodo", item.Value);
+                        }
+                    }
+                }
+
+                _iSunitpService.AddObjLog("ConsultarSaldoRepository SaveDataDetailResponse", "00000000000000000000", "OBJETO ENVIADO", pws21PinCl.GetObject());
+                //CallModel
+                var edm = new EasyDataModels();
+                edm.EasyCallInit(_oledbConnection, pws21PinCl);
+                var pws21PinClResponse = edm.CallProcedure();
+                _iSunitpService.AddObjLog("ConsultarSaldoRepository SaveDataDetailResponse", "00000000000000000000", "OBJETO RECIBIDO", pws21PinClResponse.GetObject());
+
+                //ValidateResponse
+                if (!edm.IsSuccessful())
+                {
+                    _iSunitpService.AddSingleLog(pws21PinClResponse.GetValue("_defaultError"));
+                }
+
+            }
         }
     }
 }

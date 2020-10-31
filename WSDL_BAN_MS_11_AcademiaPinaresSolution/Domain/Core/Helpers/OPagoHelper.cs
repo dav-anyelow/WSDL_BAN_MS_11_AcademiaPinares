@@ -9,7 +9,7 @@ namespace Domain.Core.Helpers
     public class OPagoHelper
     {
         private string __oPago = "";
-        private string __oPagoTemplate = "<clsPago xmlns='Caja Empresarial'>"
+        private string __oPagoTemplate = "<clsPago xmlns=\"Caja Empresarial\">"
                                         + "<Recibo>{0}</Recibo>"
                                         + "<Cajero>{1}</Cajero>"
                                         + "<CodigoFamilia>{2}</CodigoFamilia>"
